@@ -1,7 +1,8 @@
 const TIME_BLOCKS = ["8-10 AM", "10 AM-12 PM", "12-2 PM", "2-5 PM", "5-8 PM", "8-10 PM"];
 const ALL_TIMES = "All Times";
 // Swap this path if you move the local campus PNG.
-const MAP_IMAGE_PATH = "assets/smith-campus-map.jpeg";
+const MAP_IMAGE_PATH = "/avoidancemap/assets/smith-campus-map.jpeg";
+
 
 // Percentage coordinates keep the overlay responsive and easy to tune by hand.
 const buildingPositions = {
