@@ -1,0 +1,521 @@
+:root {
+  --bg: #f7f2ea;
+  --bg-soft: #fbf8f2;
+  --card: rgba(255, 252, 247, 0.92);
+  --line: rgba(41, 35, 31, 0.14);
+  --line-strong: rgba(41, 35, 31, 0.22);
+  --text: #24201d;
+  --muted: #6f655c;
+  --accent: #8f3d36;
+  --accent-soft: #d8b0a5;
+  --accent-pale: #f2e2dc;
+  --shadow: 0 10px 30px rgba(36, 32, 29, 0.05);
+  --radius: 18px;
+  --radius-small: 12px;
+  --page-width: 1240px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", sans-serif;
+  line-height: 1.55;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top left, rgba(143, 61, 54, 0.035), transparent 32%),
+    radial-gradient(circle at 85% 15%, rgba(143, 61, 54, 0.025), transparent 22%);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+.page-shell {
+  width: min(calc(100% - 2rem), var(--page-width));
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+}
+
+.site-header {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0 2.5rem;
+}
+
+.eyebrow,
+.kicker,
+.note,
+.map-note,
+.panel-copy,
+.metric-label,
+.legend-label,
+.legend-ticks,
+.summary-meta,
+.findings-list,
+.methodology-copy,
+.field span,
+.tab-button {
+  letter-spacing: 0.01em;
+}
+
+.eyebrow,
+.kicker,
+.note,
+.map-note,
+.panel-copy,
+.metric-label,
+.summary-meta,
+.methodology-copy p,
+.field span,
+.legend-label,
+.legend-ticks span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.header-copy {
+  max-width: 860px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-family: "Instrument Serif", serif;
+}
+
+h1 {
+  font-size: clamp(3.7rem, 9vw, 7.5rem);
+  text-transform: lowercase;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  text-transform: lowercase;
+}
+
+h3 {
+  font-size: clamp(1.65rem, 2.7vw, 2.35rem);
+}
+
+.subtitle {
+  max-width: 700px;
+  margin: 1rem 0 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: var(--text);
+}
+
+.note {
+  margin: 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.controls-panel,
+.findings-section,
+.methodology,
+.viz-card,
+.map-card,
+.detail-card,
+.summary-card {
+  padding: 1.2rem;
+}
+
+.section-heading {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.field input,
+.field select,
+.field button {
+  min-height: 50px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  padding: 0 1rem;
+  transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
+}
+
+.field input:focus,
+.field select:focus,
+.field button:focus,
+.tab-button:focus {
+  outline: none;
+  border-color: var(--line-strong);
+  box-shadow: 0 0 0 3px rgba(143, 61, 54, 0.08);
+}
+
+.button-field {
+  align-self: end;
+}
+
+.field button,
+.tab-button {
+  cursor: pointer;
+}
+
+.field button:hover,
+.tab-button:hover,
+.timeline-row:hover {
+  transform: translateY(-1px);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.summary-card {
+  min-height: 182px;
+  display: grid;
+  align-content: space-between;
+  gap: 1rem;
+}
+
+.summary-meta {
+  margin: 0;
+  max-width: 28ch;
+}
+
+.tabs-section {
+  margin-top: 1.4rem;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.tab-button {
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  text-transform: lowercase;
+}
+
+.tab-button.is-active {
+  background: var(--text);
+  color: #f6f0e8;
+  border-color: var(--text);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.is-active {
+  display: block;
+}
+
+.plot-shell {
+  min-height: 700px;
+  margin-top: 1rem;
+}
+
+.empty-state {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-small);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.75fr);
+  gap: 1rem;
+}
+
+.map-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.map-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+}
+
+.map-note {
+  max-width: 250px;
+  text-align: right;
+}
+
+.legend {
+  width: fit-content;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.legend-scale {
+  width: 220px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: linear-gradient(90deg, #f4e5df 0%, #d9998a 52%, #8f3d36 100%);
+}
+
+.legend-ticks {
+  display: flex;
+  justify-content: space-between;
+}
+
+.map-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(var(--radius) - 4px);
+  border: 1px solid var(--line);
+  background: #ece2cf;
+}
+
+.campus-image {
+  width: 100%;
+  height: auto;
+}
+
+.map-markers {
+  position: absolute;
+  inset: 0;
+}
+
+.marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.marker-dot {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: 0 6px 18px rgba(34, 28, 25, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.marker:hover .marker-dot,
+.marker:focus-visible .marker-dot,
+.marker.is-selected .marker-dot {
+  transform: scale(1.08);
+  box-shadow: 0 10px 22px rgba(34, 28, 25, 0.23);
+  filter: saturate(1.08);
+}
+
+.marker-label {
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(251, 248, 242, 0.82);
+  border: 1px solid rgba(41, 35, 31, 0.12);
+  font-size: 0.78rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.marker-label.is-hidden {
+  display: none;
+}
+
+.detail-card {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.detail-metrics {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border-radius: var(--radius-small);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.detail-metrics strong {
+  display: block;
+  margin-top: 0.16rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.detail-interpretation {
+  margin: 0;
+  color: var(--text);
+}
+
+.detail-timeline {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  transition: transform 180ms ease;
+}
+
+.timeline-row span {
+  font-size: 0.88rem;
+}
+
+.timeline-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(143, 61, 54, 0.08);
+  overflow: hidden;
+}
+
+.timeline-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #e8c6be 0%, #8f3d36 100%);
+}
+
+.findings-section {
+  margin-top: 1rem;
+}
+
+.findings-list {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.methodology {
+  margin-top: 1rem;
+}
+
+.methodology summary {
+  list-style: none;
+  cursor: pointer;
+  font-family: "Instrument Serif", serif;
+  font-size: 1.8rem;
+  text-transform: lowercase;
+}
+
+.methodology summary::-webkit-details-marker {
+  display: none;
+}
+
+.methodology-copy {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.methodology-copy p {
+  margin: 0;
+  max-width: 68ch;
+}
+
+@media (max-width: 1080px) {
+  .summary-grid,
+  .controls-grid,
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-card-header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .map-note {
+    text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .page-shell {
+    width: min(calc(100% - 1rem), var(--page-width));
+    padding: 1.25rem 0 2.5rem;
+  }
+
+  .controls-panel,
+  .findings-section,
+  .methodology,
+  .viz-card,
+  .map-card,
+  .detail-card,
+  .summary-card {
+    padding: 1rem;
+  }
+
+  .plot-shell {
+    min-height: 560px;
+  }
+
+  .legend-scale {
+    width: min(180px, 55vw);
+  }
+
+  .marker-label {
+    display: none;
+  }
+
+  .timeline-row {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    gap: 0.55rem;
+  }
+}
