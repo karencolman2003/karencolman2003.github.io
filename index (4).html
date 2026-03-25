@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>karen colmán-martínez</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]})"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f7f5f0;
+    --text: #1a1a18;
+    --muted: #888880;
+    --accent: #2a2a28;
+    --link: #3a3a38;
+    --border: #d8d5ce;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  /* ── header ── */
+  h1 {
+    font-family: 'IM Fell English', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 36px;
+  }
+
+  /* ── nav ── */
+  nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav button {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 6px 16px 8px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: lowercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  nav button:first-child {
+    padding-left: 0;
+  }
+
+  nav button.active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
+
+  nav button:hover:not(.active) {
+    color: var(--accent);
+  }
+
+  /* ── tabs ── */
+  .tab {
+    display: none;
+    animation: fadein 0.18s ease;
+  }
+
+  .tab.active {
+    display: block;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── shared section ── */
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: lowercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  p {
+    color: var(--text);
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  /* ── projects ── */
+  .project {
+    margin-bottom: 28px;
+  }
+
+  .project-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .project-title a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-title a:hover {
+    border-bottom-color: var(--text);
+  }
+
+  .project-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .project-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── proofs ── */
+  .proof {
+    margin-bottom: 32px;
+  }
+
+  .proof-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: var(--text);
+  }
+
+  .proof-field {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .proof-why {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .proof-body {
+    margin-top: 10px;
+    border-left: 1px solid var(--border);
+    padding-left: 16px;
+  }
+
+  .proof-body p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 8px;
+  }
+
+  .proof-body p:last-child { margin-bottom: 0; }
+
+  /* ── links ── */
+  .links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .links a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .links a:hover {
+    color: var(--text);
+    border-bottom-color: var(--border);
+  }
+
+  /* ── footnote ── */
+  .footnote {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 64px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+  <h1>karen colmán-martínez</h1>
+  <div class="subtitle">from asunción, paraguay</div>
+
+  <nav>
+    <button class="active" onclick="switchTab('about', this)">about</button>
+    <button onclick="switchTab('projects', this)">projects</button>
+    <button onclick="switchTab('proofs', this)">proofs</button>
+    <button onclick="switchTab('writing', this)">writing</button>
+  </nav>
+
+  <!-- ── about ── -->
+  <div id="tab-about" class="tab active">
+    <div class="section">
+      <div class="section-label">about</div>
+      <p>mathematician finishing a degree at smith college.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">elsewhere</div>
+      <div class="links">
+        <a href="https://github.com/karencolman2003" target="_blank">github</a>
+        <a href="https://www.linkedin.com/in/karenvcolmanmartinez/" target="_blank">linkedin</a>
+        <a href="/cdn-cgi/l/email-protection#7f141c1013121e11121e0d0b16111a053f0c12160b17511a1b0a">email</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── projects ── -->
+  <div id="tab-projects" class="tab">
+
+    <div class="section">
+      <div class="section-label">projects / professional</div>
+
+      <div class="project">
+        <div class="project-title">
+          <a href="https://github.com/karencolman2003/private-markets-pdf-pipeline" target="_blank">private markets pdf pipeline</a>
+        </div>
+        <div class="project-meta">python, pdfplumber, camelot, pandas, streamlit</div>
+        <p class="project-desc">extracts and normalizes fund-level data from heterogeneous calpers private equity pdfs into a standard, auditable schema. 639 records, 3 sources, provenance tracking back to source page. the hard part wasn't the extraction — it was knowing when not to trust it.</p>
+      </div>
+
+      <div class="project">
+        <div class="project-title">
+          <a href="https://github.com/karencolman2003" target="_blank">tariff event study</a>
+        </div>
+        <div class="project-meta">python, scipy, ols market model</div>
+        <p class="project-desc">estimated abnormal stock returns for 8 us retail firms around 3 major 2025 tariff announcements. −7.6% caar in the 3-day window around april 2 (t = −6.4, p &lt; 0.001).</p>
+      </div>
+
+      <div class="project">
+        <div class="project-title">
+          <a href="https://github.com/karencolman2003" target="_blank">but-for price model</a>
+        </div>
+        <div class="project-meta">python, ols, counterfactual modeling</div>
+        <p class="project-desc">counterfactual gasoline price model using 164 weeks of eia/fred data to estimate prices absent the 2022 russia-ukraine shock. avg overcharge: $0.54/gallon. r² = 0.886.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">projects / personal</div>
+
+      <div class="project">
+        <div class="project-title">
+          <a href="https://badatmathquiz.vercel.app" target="_blank">bad at math quiz</a>
+        </div>
+        <div class="project-meta">next.js · 23 questions</div>
+        <p class="project-desc">reasoning traps disguised as easy math. questions that look straightforward until wording, assumptions, and overconfidence get involved.</p>
+      </div>
+
+      <div class="project">
+        <div class="project-title">
+          <a href="/avoidancemap" target="_blank">avoidance map</a>
+        </div>
+        <div class="project-meta">javascript, survey data, smith college campus</div>
+        <p class="project-desc">which building is most likely to produce an accidental sighting of someone you're avoiding, and at what times. based on real survey data.</p>
+      </div>
+
+      <div class="project">
+        <div class="project-title">one proof <span style="font-size:11px; color: var(--muted);">(coming soon)</span></div>
+        <div class="project-meta">cantor's diagonal argument, explained to a non-mathematician</div>
+        <p class="project-desc">some infinities are larger than others. this can be proven in half a page. this is that page.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── proofs ── -->
+  <div id="tab-proofs" class="tab">
+    <div class="section">
+      <div class="section-label">proofs</div>
+
+      <div class="proof">
+        <div class="proof-title">fixed point theorem on [0,1]</div>
+        <div class="proof-field">topology · real analysis</div>
+        <div class="proof-body">
+          <p>Let \(f:[0,1]\to[0,1]\) be continuous. Then \(f\) admits a fixed point, i.e., there exists \(x_1\in[0,1]\) with \(f(x_1)=x_1\).</p>
+          <p><em>Proof.</em> Define \(g:[0,1]\to\mathbb{R}\) by \(g(x)=f(x)-x\). Since \(f\) and \(x\mapsto x\) are continuous, \(g\) is continuous. Evaluating at the endpoints: \(g(0)=f(0)\ge 0\) since \(f(0)\in[0,1]\), and \(g(1)=f(1)-1\le 0\) since \(f(1)\in[0,1]\). If \(g(0)=0\) or \(g(1)=0\) we are done. Otherwise \(g(0)>0\) and \(g(1)<0\), so by the Intermediate Value Theorem there exists \(c\in(0,1)\) with \(g(c)=0\), i.e., \(f(c)=c\). \(\square\)</p>
+        </div>
+      </div>
+
+      <div class="proof">
+        <div class="proof-title">compact + hausdorff implies homeomorphism</div>
+        <div class="proof-field">topology</div>
+        <div class="proof-body">
+          <p>Let \(f:X\to Y\) be a continuous injective function where \(X\) is compact, \(Y\) is Hausdorff (\(T_2\)), and \(f(X)\) is dense in \(Y\). Then \(f\) is a homeomorphism.</p>
+          <p><em>Proof.</em> It suffices to show \(f\) is a closed map. Let \(C\subseteq X\) be closed. Since \(X\) is compact and \(C\) is closed, \(C\) is compact. Since \(f\) is continuous, \(f(C)\) is compact in \(Y\). Since \(Y\) is Hausdorff, every compact subset of \(Y\) is closed, so \(f(C)\) is closed in \(Y\). Hence \(f\) is a closed map.</p>
+          <p>For surjectivity: \(f(X)\) is dense in \(Y\), so \(\overline{f(X)}=Y\). But \(f(X)\) is compact and \(Y\) is Hausdorff, so \(f(X)\) is closed. Therefore \(f(X)=\overline{f(X)}=Y\). Thus \(f\) is a continuous closed bijection, hence a homeomorphism. \(\square\)</p>
+        </div>
+      </div>
+
+      <div class="proof">
+        <div class="proof-title">covering maps have constant fiber cardinality</div>
+        <div class="proof-field">topology · algebraic topology</div>
+        <div class="proof-body">
+          <p>Let \(p:X\to Y\) be a covering map where \(X\) is connected, and suppose \(|p^{-1}(y_0)|=k\) for some \(y_0\in Y\). Then \(|p^{-1}(y)|=k\) for every \(y\in Y\).</p>
+          <p><em>Proof.</em> Define \(N:Y\to\mathbb{Z}\) by \(N(y)=|p^{-1}(y)|\). We show \(N\) is locally constant. For any \(y\in Y\), let \(U\) be an evenly covered neighborhood, so \(p^{-1}(U)=\bigsqcup_\alpha V_\alpha\) with each \(p|_{V_\alpha}:V_\alpha\to U\) a homeomorphism. For any \(z\in U\), the fiber \(p^{-1}(z)\) contains exactly one point in each slice \(V_\alpha\), so \(|p^{-1}(z)|\) is constant on \(U\).</p>
+          <p>Since \(N\) is locally constant, each set \(S_m=\{y\in Y\mid N(y)=m\}\) is open. The collection \(\{S_m\}\) partitions \(Y\) into disjoint open sets. Since \(Y\) is connected, exactly one \(S_m\) is nonempty, so \(N\) is constant on all of \(Y\). \(\square\)</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── writing ── -->
+  <div id="tab-writing" class="tab">
+    <div class="section">
+      <div class="section-label">writing</div>
+
+      <div class="project">
+        <div class="project-title">
+          <a href="https://thesophian.com/on-getting-killed-geese-refuse-to-be-small/" target="_blank">on "getting killed," geese refuse to be small</a>
+        </div>
+        <div class="project-meta">the sophian · october 2025</div>
+        <p class="project-desc">on poptimism, the death of rockism, and why wanting too much is the last honest critical position.</p>
+      </div>
+
+      <div class="project">
+        <div class="project-title">
+          <a href="https://thesophian.com/so-sad-in-this-beautiful-place-water-from-your-eyes-live-at-the-drake/" target="_blank">so sad in this beautiful place: water from your eyes live at the drake</a>
+        </div>
+        <div class="project-meta">the sophian</div>
+        <p class="project-desc">live review.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">2026</div>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
