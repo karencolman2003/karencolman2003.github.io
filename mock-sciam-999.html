@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mock Audience Engagement Campaign | 0.999... = 1</title>
+  <meta name="description" content="A Scientific American–inspired mock audience engagement campaign for the article 'Mathematicians can’t agree on whether 0.999... equals 1'." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7f3ed;
+      --paper:#fffdfa;
+      --ink:#151515;
+      --muted:#5b5b5b;
+      --line:#ddd5cc;
+      --accent:#bf1e2e;
+      --accent-dark:#8f1420;
+      --soft:#efe7dd;
+      --max:1180px;
+      --shadow:0 12px 30px rgba(0,0,0,.045);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.6;
+    }
+    a{
+      color:var(--accent-dark);
+      text-decoration-thickness:1px;
+      text-underline-offset:.16em;
+    }
+    a:hover{color:var(--accent)}
+    .topline{height:4px;background:var(--accent)}
+    .masthead{
+      position:sticky; top:0; z-index:20;
+      background:rgba(255,253,250,.95);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .masthead-inner, .hero, main, footer{
+      max-width:var(--max);
+      margin:0 auto;
+      padding-left:1.25rem;
+      padding-right:1.25rem;
+    }
+    .masthead-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      padding-top:.95rem;
+      padding-bottom:.95rem;
+    }
+    .brand{
+      display:flex;
+      align-items:baseline;
+      gap:.8rem;
+      min-width:0;
+    }
+    .brand-name{
+      font-family:"Libre Baskerville", Georgia, serif;
+      font-size:1.6rem;
+      font-weight:700;
+      letter-spacing:-.03em;
+      white-space:nowrap;
+    }
+    .brand-sub{
+      font-size:.82rem;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .nav{
+      display:flex;
+      gap:1rem;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      font-size:.92rem;
+      color:var(--muted);
+    }
+    .nav a{
+      text-decoration:none;
+      color:inherit;
+    }
+    .nav a:hover{color:var(--accent)}
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(0, 1.75fr) minmax(290px, .95fr);
+      gap:2rem;
+      padding-top:2.3rem;
+      padding-bottom:1.2rem;
+      align-items:start;
+    }
+    .eyebrow{
+      display:inline-block;
+      margin-bottom:.8rem;
+      font-size:.82rem;
+      text-transform:uppercase;
+      font-weight:700;
+      letter-spacing:.09em;
+      color:var(--accent);
+    }
+    h1,h2,h3{
+      font-family:"Libre Baskerville", Georgia, serif;
+      letter-spacing:-.02em;
+      line-height:1.08;
+      margin:0;
+    }
+    .hero h1{
+      font-size:clamp(2.2rem, 4.6vw, 4.35rem);
+      max-width:13ch;
+      margin-bottom:.95rem;
+    }
+    .dek{
+      font-family:"Libre Baskerville", Georgia, serif;
+      font-size:clamp(1.05rem, 1.5vw, 1.24rem);
+      color:#262626;
+      max-width:48rem;
+      margin:0 0 1rem;
+      line-height:1.45;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.7rem 1rem;
+      font-size:.95rem;
+      color:var(--muted);
+      margin-bottom:1.15rem;
+    }
+    .tagline{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-left:4px solid var(--accent);
+      padding:1rem 1rem .95rem;
+      box-shadow:var(--shadow);
+      max-width:45rem;
+      font-size:.98rem;
+    }
+    .card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .sidebar{
+      padding:1.1rem 1.05rem;
+      border-top:4px solid var(--accent);
+    }
+    .sidebar h2{
+      font-size:1.35rem;
+      margin-bottom:.7rem;
+    }
+    .sidebar p{
+      margin:.45rem 0;
+      color:#2d2d2d;
+    }
+    .sidebar ul{
+      margin:.75rem 0 0;
+      padding-left:1.2rem;
+    }
+    .sidebar li{margin:.35rem 0}
+    main{
+      padding-bottom:3rem;
+    }
+    .split{
+      display:grid;
+      grid-template-columns:1.1fr 1fr;
+      gap:1.2rem;
+      margin:1rem 0 1.2rem;
+    }
+    .section{
+      padding:1.18rem 1.1rem 1.05rem;
+    }
+    .section h2{
+      font-size:1.5rem;
+      margin-bottom:.55rem;
+    }
+    .section p{
+      margin:.45rem 0;
+    }
+    .kicker{
+      font-size:.78rem;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.09em;
+      font-weight:700;
+      margin-bottom:.45rem;
+      display:block;
+    }
+    .platform-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:1rem;
+      margin:1rem 0 1.35rem;
+    }
+    .platform{
+      padding:1.05rem 1rem;
+    }
+    .platform h3{
+      font-size:1.2rem;
+      margin-bottom:.55rem;
+    }
+    .platform .label{
+      display:inline-block;
+      font-size:.74rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:.4rem;
+    }
+    .copy{
+      background:var(--soft);
+      border-left:3px solid var(--accent);
+      padding:.8rem .85rem;
+      margin:.75rem 0;
+      font-size:.96rem;
+    }
+    .copy strong{
+      display:block;
+      margin-bottom:.2rem;
+    }
+    .platform p:last-child{margin-bottom:0}
+    .headlines{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:1rem;
+      margin:1rem 0 1.3rem;
+    }
+    .headline{
+      padding:1rem;
+    }
+    .headline h3{
+      font-size:1.06rem;
+      margin-bottom:.45rem;
+    }
+    .video{
+      padding:1.1rem;
+      margin:0 0 1.3rem;
+    }
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(5, minmax(0,1fr));
+      gap:.8rem;
+      margin-top:.9rem;
+    }
+    .step{
+      background:var(--soft);
+      border:1px solid #e3d8cb;
+      padding:.75rem;
+      min-height:120px;
+    }
+    .step .num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:1.7rem;
+      height:1.7rem;
+      border-radius:999px;
+      background:var(--accent);
+      color:white;
+      font-size:.8rem;
+      font-weight:700;
+      margin-bottom:.55rem;
+    }
+    .metrics{
+      display:grid;
+      grid-template-columns:repeat(5, minmax(0,1fr));
+      gap:.85rem;
+      margin:0 0 1.4rem;
+    }
+    .metric{
+      padding:1rem .9rem;
+      text-align:left;
+    }
+    .metric h3{
+      font-size:1rem;
+      margin-bottom:.32rem;
+    }
+    .metric p{
+      margin:0;
+      color:#333;
+      font-size:.95rem;
+    }
+    .footer-note{
+      border-top:1px solid var(--line);
+      padding-top:1rem;
+      font-size:.92rem;
+      color:var(--muted);
+    }
+    .small{
+      font-size:.92rem;
+      color:var(--muted);
+    }
+    .lede-list{
+      margin:.65rem 0 0;
+      padding-left:1.2rem;
+    }
+    .lede-list li{margin:.32rem 0}
+    @media (max-width: 980px){
+      .hero, .split, .platform-grid, .headlines, .metrics, .steps{
+        grid-template-columns:1fr;
+      }
+      .hero h1{max-width:16ch}
+      .nav{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand">
+        <div class="brand-name">Scientific American</div>
+        <div class="brand-sub">Mock Audience Engagement Campaign</div>
+      </div>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#goal">Audience Goal</a>
+        <a href="#platforms">Platform Strategy</a>
+        <a href="#headlines">Headline Tests</a>
+        <a href="#video">Short-Form Concept</a>
+        <a href="#metrics">Metrics</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="eyebrow">Math • Newsletter-Friendly • Conversation Starter</span>
+      <h1>How to package a deceptively simple math argument for broad audiences</h1>
+      <p class="dek">
+        A mock audience engagement campaign built around Scientific American’s article
+        <em>“Mathematicians can’t agree on whether 0.999... equals 1”</em> — designed to show
+        how a conceptually dense idea can be framed for social, newsletter, and discussion platforms
+        without losing rigor.
+      </p>
+      <div class="meta">
+        <span>Article focus: 0.999... = 1</span>
+        <span>Primary audiences: curious nonexperts, students, puzzle-lovers</span>
+        <span>Platforms: Instagram, TikTok/Reels, LinkedIn, Reddit</span>
+      </div>
+      <div class="tagline">
+        <strong>Mock assignment note.</strong> Created as a portfolio exercise for the
+        Scientific American internship application. The goal is not to sensationalize the math,
+        but to translate a familiar online argument into platform-specific packages that invite
+        curiosity, preserve nuance, and encourage deeper reading.
+      </div>
+    </div>
+
+    <aside class="card sidebar">
+      <h2>Why this story works</h2>
+      <p>
+        This article is unusually strong for engagement because it starts from a claim many readers
+        think they already understand, then gently reveals that the real story is about mathematical
+        representation, proof, and what changes when you alter the rules of the system.
+      </p>
+      <ul>
+        <li>It opens with a familiar internet debate.</li>
+        <li>It rewards readers with multiple proofs and visual reasoning.</li>
+        <li>It creates space for comments, saves, shares, and classroom discussion.</li>
+        <li>It naturally supports short-form explanatory graphics.</li>
+      </ul>
+      <p class="small">
+        Best framing: “Here’s why this argument keeps resurfacing — and why the answer depends on what mathematical system you’re working in.”
+      </p>
+    </aside>
+  </section>
+
+  <main>
+    <div class="split" id="goal">
+      <section class="card section">
+        <span class="kicker">Story selected</span>
+        <h2>Article context</h2>
+        <p>
+          The article explains why many mathematicians treat <strong>0.999... and 1 as the same number</strong>,
+          then widens the frame: the disagreement is less about arithmetic tricks than about what kinds of number systems
+          and definitions readers are willing to accept.
+        </p>
+        <p>
+          That makes this piece ideal for engagement. It has a high-curiosity premise, a clear educational payoff,
+          and a built-in opportunity to turn “gotcha math” into a story about proof, notation, and scientific humility.
+        </p>
+        <p>
+          <a href="https://www.scientificamerican.com/article/mathematicians-cant-agree-on-whether-0-999-equals-1/" target="_blank" rel="noopener noreferrer">
+            View the original Scientific American article
+          </a>
+        </p>
+      </section>
+
+      <section class="card section">
+        <span class="kicker">Audience goal</span>
+        <h2>What success should look like</h2>
+        <p>
+          Reach readers who like argument-driven science stories but may not usually click on math coverage. The package
+          should convert a familiar “wait, what?” reaction into deeper reading, comment participation, and newsletter interest.
+        </p>
+        <ul class="lede-list">
+          <li><strong>Primary target:</strong> curious general readers who enjoy explainers, puzzles, and deceptively simple questions.</li>
+          <li><strong>Secondary target:</strong> students, teachers, and STEM-adjacent readers likely to save or share the piece.</li>
+          <li><strong>Core action:</strong> click through, read to the second half, and discuss the “new rules for the game” angle.</li>
+        </ul>
+      </section>
+    </div>
+
+    <section id="platforms">
+      <span class="kicker">Platform strategy</span>
+      <h2 style="margin-bottom:.3rem;">Tailor the hook, keep the rigor</h2>
+      <p class="small" style="max-width:56rem; margin:.1rem 0 1rem;">
+        Each platform leans on a different strength of the piece: visual surprise, argument, classroom utility, or comment-rich debate.
+      </p>
+
+      <div class="platform-grid">
+        <article class="card platform">
+          <span class="label">Instagram carousel</span>
+          <h3>Make the idea visual and save-worthy</h3>
+          <p>
+            Best for a 5-card explainer: <strong>claim → quick proof → geometric series → “why people still argue” → link back to article.</strong>
+          </p>
+          <div class="copy">
+            <strong>Sample caption</strong>
+            Most people have seen someone insist that 0.999... is “obviously” less than 1. Mathematicians usually disagree — but the real story is more interesting than a dunk. Swipe for three ways of seeing the problem, and why changing the rules of the number system changes the answer.
+          </div>
+          <p>
+            <strong>Why this angle works:</strong> Instagram rewards strong first-frame contrast and content that readers save for later.
+            The carousel format lets the logic build without requiring a long caption.
+          </p>
+        </article>
+
+        <article class="card platform">
+          <span class="label">TikTok / Reels</span>
+          <h3>Lead with the argument, then flip it</h3>
+          <p>
+            Open on the controversial claim, then reveal that the deeper twist is about notation and mathematical frameworks, not a trick.
+          </p>
+          <div class="copy">
+            <strong>Video hook</strong>
+            “If 0.999... is less than 1, tell me what number sits between them.”<br><br>
+            Follow-up line: “That question turns a meme-level math fight into something much more interesting.”
+          </div>
+          <p>
+            <strong>Why this angle works:</strong> strong comment potential, fast setup, and a clean transition from controversy to explanation.
+          </p>
+        </article>
+
+        <article class="card platform">
+          <span class="label">LinkedIn</span>
+          <h3>Frame it as clarity, teaching, and reasoning</h3>
+          <p>
+            Position the story as a lesson in how experts explain disagreement without flattening nuance.
+          </p>
+          <div class="copy">
+            <strong>Sample post</strong>
+            Some of the best science and math stories begin with questions that look simple on the surface. Scientific American’s piece on whether 0.999... equals 1 is a smart example: it starts with a familiar classroom argument, then uses it to show how notation, proof, and assumptions shape what counts as an answer.
+          </div>
+          <p>
+            <strong>Why this angle works:</strong> better suited to readers interested in education, communication, and the public understanding of science.
+          </p>
+        </article>
+
+        <article class="card platform">
+          <span class="label">Reddit</span>
+          <h3>Invite explanation, not just hot takes</h3>
+          <p>
+            The Reddit version should sound less promotional and more like a genuinely interesting reading prompt for math-curious communities.
+          </p>
+          <div class="copy">
+            <strong>Sample post angle</strong>
+            Scientific American has a nice explainer on why 0.999... = 1 in standard real-number notation — and why some people still resist that conclusion. The most useful part is the second half, where the article explains what happens if you change the underlying rules.
+          </div>
+          <p>
+            <strong>Why this angle works:</strong> Reddit users respond better to substance than to packaging. Emphasize the reasoning payoff.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="headlines">
+      <span class="kicker">Headline testing</span>
+      <h2 style="margin-bottom:.35rem;">Three alternate headlines</h2>
+      <p class="small" style="max-width:56rem; margin:.1rem 0 1rem;">
+        Each version preserves accuracy while pulling on a slightly different reader instinct: curiosity, argument, or conceptual payoff.
+      </p>
+
+      <div class="headlines">
+        <article class="card headline">
+          <h3>Why 0.999... equals 1 — and why people still fight about it</h3>
+          <p>
+            Best for broad audiences. Keeps the familiar controversy but promises resolution without sounding condescending.
+          </p>
+        </article>
+
+        <article class="card headline">
+          <h3>The math behind one of the internet’s most stubborn arguments</h3>
+          <p>
+            Stronger social framing. Good for off-platform promotion where the audience hook matters most.
+          </p>
+        </article>
+
+        <article class="card headline">
+          <h3>What 0.999... can teach us about proof, notation, and mathematical rules</h3>
+          <p>
+            Slightly more intellectual and newsletter-friendly. Best for readers who want ideas, not just debate.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="card video" id="video">
+      <span class="kicker">Short-form concept</span>
+      <h2 style="margin-bottom:.45rem;">45-second explainer storyboard</h2>
+      <p style="max-width:60rem;">
+        The goal is to move from argument to illumination. The visual language should be minimal: number line, repeated decimals,
+        and one clean infinite-series diagram.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <strong>Cold open</strong>
+          <div>Text on screen: “Does 0.999... equal 1?”</div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <strong>Fast proof</strong>
+          <div>Show 1/3 = 0.333..., then multiply by 3.</div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <strong>Visual step</strong>
+          <div>Animate 0.9, 0.99, 0.999 getting closer on a number line.</div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <strong>Twist</strong>
+          <div>“So why do people still argue?” Introduce the idea of changing the rules.</div>
+        </div>
+        <div class="step">
+          <div class="num">5</div>
+          <strong>CTA</strong>
+          <div>“Read the full SciAm explainer for the part most debates skip.”</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics">
+      <span class="kicker">Metrics to watch</span>
+      <h2 style="margin-bottom:.35rem;">How to tell whether the package is working</h2>
+      <p class="small" style="max-width:56rem; margin:.1rem 0 1rem;">
+        Success here is not just raw reach. It is a mix of curiosity, completion, and evidence that readers found the explanation worth returning to.
+      </p>
+
+      <div class="metrics">
+        <article class="card metric">
+          <h3>CTR</h3>
+          <p>Did social framing get readers into the story, not just into the comments?</p>
+        </article>
+        <article class="card metric">
+          <h3>Saves</h3>
+          <p>Especially useful for Instagram and carousel content with classroom or puzzle value.</p>
+        </article>
+        <article class="card metric">
+          <h3>Completion rate</h3>
+          <p>For short-form video, did viewers stay through the conceptual twist?</p>
+        </article>
+        <article class="card metric">
+          <h3>Comment quality</h3>
+          <p>Are readers arguing productively, asking questions, or tagging other people into the discussion?</p>
+        </article>
+        <article class="card metric">
+          <h3>Newsletter lift</h3>
+          <p>Math-curious readers are good candidates for repeat engagement through newsletter sign-ups.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="split">
+      <section class="card section">
+        <span class="kicker">Packaging takeaway</span>
+        <h2>What the campaign emphasizes</h2>
+        <p>
+          The piece should be framed less as “look at these people being wrong” and more as “here is a simple question that reveals how mathematical reasoning actually works.”
+        </p>
+        <p>
+          That keeps the tone aligned with Scientific American: curious, rigorous, reader-friendly, and resistant to empty virality.
+        </p>
+      </section>
+
+      <section class="card section">
+        <span class="kicker">Portfolio note</span>
+        <h2>How this could expand</h2>
+        <p>
+          A next iteration could pair this package with a mobile-first infographic or animated proof graphic, creating a stronger bridge between audience engagement and editorial visuals.
+        </p>
+        <p>
+          That would make the project useful for both engagement and graphics-oriented applications.
+        </p>
+      </section>
+    </section>
+
+    <footer class="footer-note">
+      Mock audience engagement campaign for Scientific American’s article
+      <em>“Mathematicians can’t agree on whether 0.999... equals 1”</em>.
+      Designed as a static HTML portfolio sample.
+    </footer>
+  </main>
+</body>
+</html>
