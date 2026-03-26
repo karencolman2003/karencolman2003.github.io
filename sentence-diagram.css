@@ -1,0 +1,268 @@
+:root {
+  --bg: #f4efe6;
+  --bg-soft: rgba(255, 251, 246, 0.72);
+  --panel: rgba(255, 253, 250, 0.86);
+  --ink: #181612;
+  --muted: #6d645a;
+  --line: rgba(24, 22, 18, 0.16);
+  --line-strong: rgba(24, 22, 18, 0.28);
+  --accent: #a24d31;
+  --shadow: 0 18px 50px rgba(24, 22, 18, 0.08);
+  --radius: 22px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(162, 77, 49, 0.08), transparent 30%),
+    linear-gradient(180deg, #f8f4ed 0%, var(--bg) 100%);
+  color: var(--ink);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.page-shell {
+  width: min(1080px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+}
+
+.hero {
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow,
+.hint,
+.status,
+.field span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+h1 {
+  margin: 0.35rem 0 0;
+  font-family: "Newsreader", serif;
+  font-size: clamp(2.75rem, 6vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.intro {
+  max-width: 54rem;
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.controls-panel,
+.status-panel,
+.legend {
+  padding: 1.3rem;
+}
+
+.controls-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field-wide {
+  width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+input {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--ink);
+  padding: 0 1rem;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+  border-color: var(--line-strong);
+  box-shadow: 0 0 0 3px rgba(162, 77, 49, 0.12);
+}
+
+button {
+  min-height: 52px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #f7f1ea;
+  padding: 0 1.25rem;
+  cursor: pointer;
+  transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.45;
+  transform: none;
+}
+
+.hint {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.examples button {
+  min-height: auto;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--muted);
+}
+
+.examples button:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.status-panel {
+  margin-top: 1rem;
+}
+
+.status {
+  min-height: 1.3rem;
+  margin: 0 0 1rem;
+}
+
+.diagram-area {
+  min-height: 240px;
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px dashed var(--line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.18)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(24, 22, 18, 0.015) 0,
+      rgba(24, 22, 18, 0.015) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  padding: 1rem;
+}
+
+svg.diagram {
+  display: block;
+  max-width: none;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.legend-line,
+.legend-dotted {
+  width: 32px;
+  height: 1px;
+  background: var(--ink);
+  display: inline-block;
+}
+
+.legend-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--ink);
+  display: inline-block;
+}
+
+.legend-diagonal {
+  width: 28px;
+  height: 16px;
+  position: relative;
+  display: inline-block;
+}
+
+.legend-diagonal::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 28px;
+  height: 1px;
+  background: var(--ink);
+  transform: rotate(35deg);
+  transform-origin: left bottom;
+}
+
+.legend-dotted {
+  background: repeating-linear-gradient(
+    to right,
+    var(--muted) 0,
+    var(--muted) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+@media (max-width: 760px) {
+  .page-shell {
+    width: min(100%, calc(100% - 1rem));
+    padding-top: 1.4rem;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
+  }
+}

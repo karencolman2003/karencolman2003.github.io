@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentence Diagrammer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="sentence-diagram.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <p class="eyebrow">sentence diagramming tool</p>
+      <h1>Reed-Kellogg, but readable.</h1>
+      <p class="intro">
+        Paste a sentence, let Claude return the parts, and render a cleaner SVG that gives each
+        modifier and phrase enough room to breathe.
+      </p>
+    </section>
+
+    <section class="panel controls-panel">
+      <label class="field field-wide" for="sentence-input">
+        <span>Sentence</span>
+        <input
+          id="sentence-input"
+          type="text"
+          maxlength="220"
+          placeholder="Try: the tall woman gave her friend a gift."
+        >
+      </label>
+
+      <div class="row">
+        <label class="field" for="api-key">
+          <span>Anthropic API key</span>
+          <input
+            id="api-key"
+            type="password"
+            autocomplete="off"
+            placeholder="Paste key for browser-only testing"
+          >
+        </label>
+        <button id="diagram-btn" type="button">Diagram sentence</button>
+      </div>
+
+      <p class="hint">
+        The key is used only for the API request from your browser. Since you pasted a real key
+        into chat, rotate that key in Anthropic before using this page.
+      </p>
+
+      <div class="examples">
+        <button type="button" data-example="the dog chased the cat.">the dog chased the cat.</button>
+        <button type="button" data-example="she quietly reads old books.">she quietly reads old books.</button>
+        <button type="button" data-example="the tall woman gave her friend a gift.">the tall woman gave her friend a gift.</button>
+      </div>
+    </section>
+
+    <section class="panel status-panel">
+      <p id="status" class="status" aria-live="polite"></p>
+      <div id="diagram-area" class="diagram-area"></div>
+    </section>
+
+    <section id="legend" class="panel legend" hidden>
+      <div class="legend-item">
+        <span class="legend-line"></span>
+        <span>Main baseline</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-divider"></span>
+        <span>Divider</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-diagonal"></span>
+        <span>Modifier</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dotted"></span>
+        <span>Prepositional phrase</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="sentence-diagram.js"></script>
+</body>
+</html>
