@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sentence diagram</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f7f5f0;
+    --ink: #1a1a18;
+    --muted: #888880;
+    --border: #d8d5ce;
+    --line: #1a1a18;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 72px 28px 120px;
+  }
+
+  .back {
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    display: inline-block;
+    margin-bottom: 40px;
+    border-bottom: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .back:hover { color: var(--ink); border-bottom-color: var(--border); }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .subtitle {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    letter-spacing: 0.04em;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .input-row input {
+    flex: 1;
+    background: none;
+    border: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 10px 0;
+    outline: none;
+  }
+
+  .input-row input::placeholder { color: var(--muted); }
+
+  .input-row button {
+    background: none;
+    border: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    padding: 10px 0 10px 20px;
+    transition: color 0.15s;
+  }
+  .input-row button:hover { color: var(--ink); }
+  .input-row button:disabled { opacity: 0.3; cursor: default; }
+
+  .key-row {
+    display: flex;
+    gap: 0;
+    margin-bottom: 4px;
+  }
+
+  .key-input {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 6px 0;
+    outline: none;
+    width: 320px;
+    letter-spacing: 0.04em;
+  }
+  .key-input::placeholder { color: var(--border); }
+  .key-note {
+    font-size: 10px;
+    color: var(--border);
+    margin-bottom: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  .status {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 32px;
+    min-height: 18px;
+  }
+
+  .diagram-area {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+  }
+
+  svg.diagram {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .legend {
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 40px;
+  }
+
+  .legend-item {
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .legend-line {
+    width: 24px;
+    height: 1px;
+    background: var(--ink);
+  }
+  .legend-diag {
+    width: 24px;
+    height: 12px;
+    position: relative;
+  }
+  .legend-diag::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 24px; height: 1px;
+    background: var(--ink);
+    transform-origin: left bottom;
+    transform: rotate(-35deg);
+  }
+  .legend-dotted {
+    width: 24px;
+    height: 1px;
+    background: repeating-linear-gradient(to right, var(--muted) 0, var(--muted) 3px, transparent 3px, transparent 6px);
+  }
+
+  .blood-meridian-link {
+    font-size: 11px;
+    margin-bottom: 32px;
+  }
+  .blood-meridian-link a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .blood-meridian-link a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+
+  footer {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 80px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  .error {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .examples {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .examples span {
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.15s, color 0.15s;
+    margin-right: 16px;
+  }
+  .examples span:hover { color: var(--ink); border-bottom-color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back" href="/">← karen colmán-martínez</a>
+
+  <h1>sentence diagram</h1>
+  <div class="subtitle">reed-kellogg style · ai-powered parser</div>
+
+  <div class="key-row">
+    <input class="key-input" type="password" id="api-key" placeholder="paste your anthropic api key to use" />
+  </div>
+  <div class="key-note">your key stays in the browser. never sent anywhere except api.anthropic.com.</div>
+
+  <div class="input-row">
+    <input type="text" id="sentence-input" placeholder="type a sentence..." maxlength="200" />
+    <button id="diagram-btn" onclick="diagramSentence()">diagram →</button>
+  </div>
+
+  <div class="examples">
+    try: 
+    <span onclick="fillExample('the dog chased the cat.')">the dog chased the cat.</span>
+    <span onclick="fillExample('she quietly reads old books.')">she quietly reads old books.</span>
+    <span onclick="fillExample('the tall woman gave her friend a gift.')">the tall woman gave her friend a gift.</span>
+  </div>
+
+  <div class="blood-meridian-link">
+    <a href="/bloodmeridian.html">or: a bad attempt at diagramming a sentence from blood meridian, all-timer run-on →</a>
+  </div>
+
+  <div class="status" id="status"></div>
+  <div class="diagram-area" id="diagram-area"></div>
+
+  <div class="legend" id="legend" style="display:none">
+    <div class="legend-item"><div class="legend-line"></div> subject / predicate baseline</div>
+    <div class="legend-item"><div style="width:24px;height:1px;background:var(--ink);position:relative;"><div style="position:absolute;right:0;top:-8px;width:1px;height:9px;background:var(--ink)"></div></div> vertical divider</div>
+    <div class="legend-item"><div class="legend-diag"></div> modifier (diagonal)</div>
+    <div class="legend-item"><div class="legend-dotted"></div> prepositional phrase</div>
+  </div>
+
+  <footer>sentence diagram · karen colmán-martínez</footer>
+</div>
+
+<script>
+function fillExample(s) {
+  document.getElementById('sentence-input').value = s;
+  document.getElementById('sentence-input').focus();
+}
+
+async function diagramSentence() {
+  const key = document.getElementById('api-key').value.trim();
+  const sentence = document.getElementById('sentence-input').value.trim();
+  const btn = document.getElementById('diagram-btn');
+  const status = document.getElementById('status');
+  const area = document.getElementById('diagram-area');
+  const legend = document.getElementById('legend');
+
+  if (!key) { status.textContent = 'paste your api key above first.'; return; }
+  if (!sentence) { status.textContent = 'type a sentence first.'; return; }
+
+  btn.disabled = true;
+  status.textContent = 'parsing...';
+  area.innerHTML = '';
+  legend.style.display = 'none';
+
+  const prompt = `You are a grammatical parser for Reed-Kellogg sentence diagramming. Given a sentence, return ONLY a JSON object describing its grammatical structure. No explanation, no markdown, just raw JSON.
+
+The JSON must have this exact structure:
+{
+  "subject": "word",
+  "verb": "word",
+  "object": "word or null",
+  "indirect_object": "word or null",
+  "subject_complement": "word or null",
+  "subject_modifiers": ["adjective/article words modifying subject"],
+  "verb_modifiers": ["adverbs modifying verb"],
+  "object_modifiers": ["adjective words modifying object"],
+  "prepositional_phrases": [{"preposition": "word", "object": "word", "modifies": "subject|verb|object"}]
+}
+
+Rules:
+- subject, verb are always strings
+- object, indirect_object, subject_complement are strings or null
+- all modifier arrays can be empty []
+- prepositional_phrases can be empty []
+- only include words actually in the sentence
+- for "modifies" in prepositional phrases use one of: subject, verb, object
+
+Sentence: "${sentence}"`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await res.json();
+    if (data.error) { status.textContent = 'api error: ' + data.error.message; btn.disabled = false; return; }
+
+    const raw = data.content[0].text.trim().replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(raw);
+
+    status.textContent = '';
+    drawDiagram(parsed, sentence);
+    legend.style.display = 'flex';
+
+  } catch(e) {
+    status.textContent = 'something went wrong. check your api key and try again.';
+    console.error(e);
+  }
+
+  btn.disabled = false;
+}
+
+document.getElementById('sentence-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') diagramSentence();
+});
+
+function drawDiagram(p, originalSentence) {
+  const area = document.getElementById('diagram-area');
+
+  const INK = '#1a1a18';
+  const MUTED = '#888880';
+
+  // text measurement
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  function mw(text, small) {
+    ctx.font = small ? "12px 'IBM Plex Mono', monospace" : "14px 'IBM Plex Mono', monospace";
+    return ctx.measureText(text).width;
+  }
+
+  const PAD = 24;          // padding around words on baseline
+  const BASELINE_Y = 80;   // top padding before baseline
+  const LINE_H = 44;       // height of vertical dividers above+below baseline
+  const MOD_DROP = 44;     // vertical drop for diagonal modifiers
+  const MOD_RUN = 20;      // horizontal run of modifier diagonal
+  const MOD_SPACING = 52;  // horizontal space between modifiers under same word
+  const PREP_GAP = 20;     // gap from baseline to start of prep connector
+  const PREP_ROW_H = 72;   // vertical space per prepositional phrase row
+  const MARGIN_L = 48;
+
+  // word widths on baseline
+  const subjW = Math.max(mw(p.subject) + PAD * 2, 70);
+  const verbW = Math.max(mw(p.verb) + PAD * 2, 70);
+  const objW  = p.object            ? Math.max(mw(p.object) + PAD * 2, 70) : 0;
+  const ioW   = p.indirect_object   ? Math.max(mw(p.indirect_object) + PAD * 2, 70) : 0;
+  const scW   = p.subject_complement? Math.max(mw(p.subject_complement) + PAD * 2, 70) : 0;
+
+  // x positions
+  const subjX   = MARGIN_L;
+  const div1X   = subjX + subjW;
+  const verbX   = div1X;
+  const div2X   = verbX + verbW;
+  let   mainW   = div2X;
+  let   objX = null, ioX = null, scX = null;
+
+  if (p.indirect_object && p.object) {
+    ioX   = div2X;
+    objX  = ioX + ioW;
+    mainW = objX + objW;
+  } else if (p.object) {
+    objX  = div2X;
+    mainW = objX + objW;
+  } else if (p.subject_complement) {
+    scX   = div2X;
+    mainW = scX + scW;
+  }
+
+  // modifier sets
+  const sMods = (p.subject_modifiers  || []);
+  const vMods = (p.verb_modifiers     || []);
+  const oMods = (p.object_modifiers   || []);
+  const preps = (p.prepositional_phrases || []);
+
+  const hasMods = sMods.length + vMods.length + oMods.length > 0;
+  const modRowH = hasMods ? MOD_DROP + 28 : 0;
+  const prepH   = preps.length * PREP_ROW_H;
+
+  // total SVG dimensions — wide enough, tall enough
+  const PREP_COL_W = 100;
+  const PREP_STEM  = 26;
+  const PREP_Y_OFFSET = 48;
+
+  const prepSpread = preps.length * PREP_COL_W;
+  const totalW = Math.max(mainW + MARGIN_L * 2, 560, subjX + prepSpread + MARGIN_L * 2);
+  const totalH = BASELINE_Y + LINE_H / 2 + modRowH + (preps.length > 0 ? PREP_Y_OFFSET + PREP_STEM + 48 : 40);
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width',   totalW);
+  svg.setAttribute('height',  totalH);
+  svg.setAttribute('viewBox', `0 0 ${totalW} ${totalH}`);
+  svg.classList.add('diagram');
+
+  function ln(x1, y1, x2, y2, stroke, sw, dash) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    el.setAttribute('x1', x1); el.setAttribute('y1', y1);
+    el.setAttribute('x2', x2); el.setAttribute('y2', y2);
+    el.setAttribute('stroke', stroke || INK);
+    el.setAttribute('stroke-width', sw || 1);
+    if (dash) el.setAttribute('stroke-dasharray', dash);
+    svg.appendChild(el);
+  }
+
+  function tx(str, x, y, anchor, small, fill) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    el.setAttribute('x', x); el.setAttribute('y', y);
+    el.setAttribute('text-anchor', anchor || 'middle');
+    el.setAttribute('font-family', "'IBM Plex Mono', monospace");
+    el.setAttribute('font-size', small ? 12 : 14);
+    el.setAttribute('fill', fill || INK);
+    el.textContent = str;
+    svg.appendChild(el);
+  }
+
+  // ── main baseline ──
+  ln(subjX, BASELINE_Y, mainW + 12, BASELINE_Y);
+
+  // subject
+  tx(p.subject, subjX + subjW / 2, BASELINE_Y - 10);
+  // vertical divider subject|verb
+  ln(div1X, BASELINE_Y - LINE_H / 2, div1X, BASELINE_Y + LINE_H / 2);
+  // verb
+  tx(p.verb, verbX + verbW / 2, BASELINE_Y - 10);
+
+  // object / indirect object / subject complement
+  if (p.indirect_object && p.object) {
+    ln(div2X, BASELINE_Y - LINE_H / 2, div2X, BASELINE_Y + LINE_H / 2);
+    tx(p.indirect_object, ioX + ioW / 2, BASELINE_Y - 10);
+    ln(ioX + ioW, BASELINE_Y - LINE_H / 2, ioX + ioW, BASELINE_Y + LINE_H / 2);
+    tx(p.object, objX + objW / 2, BASELINE_Y - 10);
+  } else if (p.object) {
+    ln(div2X, BASELINE_Y - LINE_H / 2, div2X, BASELINE_Y + LINE_H / 2);
+    tx(p.object, objX + objW / 2, BASELINE_Y - 10);
+  } else if (p.subject_complement) {
+    // diagonal divider for predicate nominative/adjective
+    ln(div2X, BASELINE_Y + LINE_H / 2, div2X + LINE_H * 0.55, BASELINE_Y - LINE_H / 2);
+    tx(p.subject_complement, scX + scW / 2, BASELINE_Y - 10);
+  }
+
+  // ── modifiers (diagonal lines below baseline) ──
+  const modBaseY = BASELINE_Y + MOD_DROP;
+
+  function drawMods(words, anchorX, anchorW) {
+    words.forEach((word, i) => {
+      // spread modifiers evenly under the word
+      const cx = anchorX + PAD / 2 + i * MOD_SPACING + 12;
+      // diagonal line from baseline down-right
+      ln(cx, BASELINE_Y, cx + MOD_RUN, modBaseY);
+      // horizontal shelf
+      ln(cx, modBaseY, cx + MOD_RUN + Math.max(mw(word, true) + 8, 36), modBaseY);
+      tx(word, cx + MOD_RUN + 4, modBaseY - 5, 'start', true, MUTED);
+    });
+  }
+
+  drawMods(sMods, subjX, subjW);
+  drawMods(vMods, verbX, verbW);
+  if (objX !== null) drawMods(oMods, objX, objW);
+
+  // ── prepositional phrases ──
+  // lay them out HORIZONTALLY side by side, not stacked vertically
+  // each prep gets its own column; connector drops from anchor to its column
+
+  const PREP_Y = BASELINE_Y + LINE_H / 2 + modRowH + PREP_Y_OFFSET;
+
+  // figure out anchor x for each prep
+  const prepData = preps.map(pp => {
+    const ax =
+      pp.modifies === 'subject'                  ? subjX + subjW / 2 :
+      pp.modifies === 'object' && objX !== null  ? objX  + objW  / 2 :
+                                                   verbX + verbW / 2;
+    return { ...pp, anchorX: ax };
+  });
+
+  // place each prep in a column starting from its anchor x
+  // group by anchor, spread left/right around it
+  const anchorGroups = {};
+  prepData.forEach(pp => {
+    const k = pp.anchorX;
+    if (!anchorGroups[k]) anchorGroups[k] = [];
+    anchorGroups[k].push(pp);
+  });
+
+  Object.entries(anchorGroups).forEach(([axStr, group]) => {
+    const ax = parseFloat(axStr);
+    const total = group.length;
+    group.forEach((pp, i) => {
+      const prepW  = Math.max(mw(pp.preposition, true) + 20, 60);
+      const pObjW  = Math.max(mw(pp.object,      true) + 20, 60);
+      // center the group around the anchor, spread by PREP_COL_W
+      const colOffset = (i - (total - 1) / 2) * PREP_COL_W;
+      const cx = ax + colOffset; // center x of this prep's column
+
+      const lineL = cx - prepW / 2;
+      const lineR = cx + prepW / 2;
+
+      // dotted connector: straight down from anchor, then horizontal to prep center
+      ln(ax, BASELINE_Y + LINE_H / 2 + (hasMods ? modRowH : 0) + 4,
+         ax, PREP_Y - 14, MUTED, 0.8, '3,3');
+      ln(ax, PREP_Y - 14, cx, PREP_Y - 14, MUTED, 0.8, '3,3');
+
+      // preposition label above line
+      tx(pp.preposition, cx, PREP_Y - 5, 'middle', true, MUTED);
+      // preposition horizontal line
+      ln(lineL, PREP_Y, lineR, PREP_Y);
+
+      // vertical stem down to object
+      ln(cx, PREP_Y, cx, PREP_Y + PREP_STEM);
+
+      // object horizontal line + label below it
+      const oL = cx - pObjW / 2;
+      const oR = cx + pObjW / 2;
+      ln(oL, PREP_Y + PREP_STEM, oR, PREP_Y + PREP_STEM);
+      tx(pp.object, cx, PREP_Y + PREP_STEM + 14, 'middle', true, MUTED);
+    });
+  });
+
+  area.appendChild(svg);
+}
+</script>
+</body>
+</html>
