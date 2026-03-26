@@ -233,6 +233,7 @@
     <button class="active" onclick="switchTab('about', this)">about</button>
     <button onclick="switchTab('projects', this)">projects</button>
     <button onclick="switchTab('proofs', this)">proofs</button>
+    <button onclick="switchTab('research', this)">math research</button>
     <button onclick="switchTab('writing', this)">writing</button>
   </nav>
 
@@ -348,6 +349,24 @@
     </div>
   </div>
 
+  <div id="tab-research" class="tab">
+  <div class="section">
+    <div class="section-label">math research</div>
+
+    <div class="project">
+      <div class="project-title">springer fibers and webs</div>
+      <div class="project-meta">algebraic combinatorics · representation theory · ongoing · with prof. julianna tymoczko</div>
+      <p class="project-desc">ongoing lab studying the combinatorics of springer fibers through web graphs. starting from balanced yamanouchi words, we construct multicolored noncrossing matchings and translate them into web graphs via trivalent vertices and crossing resolutions. current work involves depth bands, strandings, and arc flip operations — exploring how sequences of flips connect different boundary words and how multi-arc crossings can be systematically resolved.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-title">applications of ricci curvature on graphs: community detection</div>
+      <div class="project-meta">graph theory · applied mathematics · may 2024 · with prof. xavier ramos-olivé</div>
+      <p class="project-desc">ricci curvature on a graph edge measures how "well connected" two vertices are — formalized as an optimal transport problem where the cost of moving probability mass between vertex neighborhoods determines the curvature. we explored jie gao et al.'s ricci flow algorithm, which iteratively adjusts edge weights based on curvature then performs a "surgery" to cut poorly connected edges, revealing community structure. our contribution was investigating whether assigning small weights to certain edges could prevent the algorithm from cutting connections known to be strong. we found that reducing edge weight alone is insufficient — the relative weight of neighboring edges also drives the transport cost, and this interaction needs to be accounted for in any bias-aware modification.</p>
+    </div>
+
+  </div>
+</div>
   <!-- ── writing ── -->
   <div id="tab-writing" class="tab">
     <div class="section">
