@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>one proof — karen colmán-martínez</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]})"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --bg: #f7f5f0;
+    --ink: #1a1a18;
+    --muted: #888880;
+    --border: #d8d5ce;
+    --highlight-bg: #1a1a18;
+    --highlight-fg: #f7f5f0;
+    --changed-bg: #888880;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    min-height: 100vh;
+  }
+
+  /* ── layout grid ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 32px 140px;
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    grid-template-areas: "header header" "main aside";
+    gap: 0 56px;
+  }
+
+  header {
+    grid-area: header;
+    margin-bottom: 64px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+  }
+
+  .back {
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    display: inline-block;
+    margin-bottom: 32px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .back:hover { color: var(--ink); border-bottom-color: var(--border); }
+
+  .header-grid {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 0 56px;
+    align-items: end;
+  }
+
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+  }
+
+  .header-meta {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    padding-bottom: 4px;
+  }
+
+  /* ── main + aside ── */
+  main { grid-area: main; }
+  aside {
+    grid-area: aside;
+    position: relative;
+  }
+
+  /* ── prose sections ── */
+  .section {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section.always { opacity: 1; transform: none; }
+
+  .section p {
+    margin-bottom: 14px;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--ink);
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* ── margin notes ── */
+  .margin-note {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.8;
+    border-left: 1px solid var(--border);
+    padding-left: 12px;
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease 0.15s, transform 0.5s ease 0.15s;
+  }
+  .margin-note.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── number list ── */
+  .list-wrap {
+    margin: 28px 0;
+  }
+
+  .list-label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .number-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .number-row.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .row-idx {
+    font-size: 10px;
+    color: var(--muted);
+    min-width: 24px;
+    padding-right: 6px;
+  }
+
+  .zero-dot { color: var(--muted); margin-right: 1px; }
+
+  .digit {
+    width: 13px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.7;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .digit.diag {
+    background: var(--highlight-bg);
+    color: var(--highlight-fg);
+  }
+  .digit.changed {
+    background: var(--changed-bg);
+    color: var(--highlight-fg);
+  }
+
+  /* ── new number row ── */
+  .new-row {
+    display: flex;
+    align-items: center;
+    margin-top: 18px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .new-row.visible { opacity: 1; }
+  .new-label { font-size: 10px; color: var(--muted); min-width: 24px; padding-right: 6px; }
+  .new-digit {
+    width: 13px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.7;
+    background: var(--changed-bg);
+    color: var(--highlight-fg);
+  }
+
+  /* ── step button ── */
+  .step-btn {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 7px 18px;
+    background: none;
+    border: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .step-btn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+  .step-btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── hint boxes ── */
+  .hint {
+    margin: 24px 0;
+    border-left: 2px solid var(--ink);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .hint.visible { opacity: 1; }
+
+  /* ── final claim ── */
+  .big-claim {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 32px 0 20px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .big-claim.visible { opacity: 1; }
+
+  /* ── footnote ── */
+  footer {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 80px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .page {
+      grid-template-columns: 1fr;
+      grid-template-areas: "header" "main" "aside";
+      gap: 0;
+      padding: 48px 20px 80px;
+    }
+    .header-grid { grid-template-columns: 1fr; gap: 16px; }
+    h1 { font-size: 26px; }
+    aside { margin-top: 48px; border-top: 1px solid var(--border); padding-top: 32px; }
+    .margin-note { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <a class="back" href="/">← karen colmán-martínez</a>
+    <div class="header-grid">
+      <h1>some infinities<br>are larger<br>than others.</h1>
+      <div class="header-meta">
+        one proof<br>
+        cantor's diagonal argument<br>
+        <br>
+        karen colmán-martínez<br>
+        smith college
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="section always" id="s0">
+      <p>suppose i told you to write down every real number between 0 and 1 in a list. every decimal expansion. all of them.</p>
+      <p>you might feel confident this is possible. after all, you can list every whole number: 1, 2, 3, 4... the list never ends, but it's a list. you have a first item, a second, a third.</p>
+      <p>cantor proved in 1891 that no such list can exist for the real numbers. not because the list would be long. because no matter what list you produce, i can always hand you a number you forgot.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section" id="s1">
+      <p>here's a list. let's say someone claims it contains every real number between 0 and 1.</p>
+
+      <div class="list-wrap">
+        <div class="list-label">an allegedly complete list</div>
+        <div id="number-list"></div>
+        <button class="step-btn" id="step-btn" onclick="nextStep()">show me →</button>
+      </div>
+    </div>
+
+    <div class="hint" id="hint-diag">
+      look at the <strong>diagonal</strong>: the 1st digit of the 1st number, the 2nd digit of the 2nd, the 3rd of the 3rd, and so on. these are highlighted above.
+    </div>
+
+    <div class="section" id="s2">
+      <p>now i'll build a new number. for each diagonal digit, i change it by one simple rule: if it's a 5, i write 6. anything else, i write 5. the exact rule doesn't matter, only that the digit is guaranteed to be different.</p>
+
+      <div class="list-wrap">
+        <div class="list-label">the new number</div>
+        <div class="new-row" id="new-row">
+          <div class="new-label">d</div>
+          <span class="zero-dot">0.</span>
+          <div id="new-digits"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint" id="hint-escape">
+      this number differs from row 1 in position 1. from row 2 in position 2. from row \(n\) in position \(n\). it cannot be anywhere on the list.
+    </div>
+
+    <div class="section" id="s3">
+      <div class="big-claim" id="big-claim">the list was supposed to contain everything. it does not contain this number.</div>
+      <p>it follows that no complete enumeration exists. the real numbers in \((0,1)\) cannot be placed in a sequence indexed by \(\mathbb{N}\). they are uncountably infinite, strictly larger in cardinality than the natural numbers.</p>
+      <p>cantor called this distinction countable vs. uncountable infinity. \(|\mathbb{N}|\) and \(|\mathbb{R}|\) are both infinite, but \(|\mathbb{N}| < |\mathbb{R}|\).</p>
+      <p>the argument is not specific to this list. it is a general procedure: given any enumeration of real numbers, the diagonal construction produces a real number outside that enumeration. therefore no enumeration can be complete.</p>
+    </div>
+
+  </main>
+
+  <aside id="aside-col">
+
+    <div class="margin-note" id="mn0">
+      1891. cantor was 46. the paper is two pages. it was initially rejected.
+    </div>
+
+    <div class="margin-note" id="mn1">
+      the integers \(\mathbb{Z}\) are countably infinite: you can match them one-to-one with the natural numbers \(\mathbb{N}\).
+    </div>
+
+    <div class="margin-note" id="mn2">
+      the diagonal digit of row \(n\) is the \(n\)-th decimal place of the \(n\)-th number on the list.
+    </div>
+
+    <div class="margin-note" id="mn3">
+      more precisely: if the list existed, it would define a bijection \(\mathbb{N} \to (0,1)\). the diagonal argument shows no such bijection can exist.
+    </div>
+
+    <div class="margin-note" id="mn4">
+      \(|\mathbb{N}| < |\mathbb{R}|\). there are different sizes of infinity. this was genuinely shocking in 1891.
+    </div>
+
+  </aside>
+
+  <footer>one proof · karen colmán-martínez · 2026</footer>
+
+</div>
+
+<script>
+const numbers = [
+  [1,4,1,5,9,2,6,5],
+  [7,1,8,2,8,1,8,2],
+  [3,3,3,3,3,3,3,3],
+  [9,0,9,0,9,0,9,0],
+  [2,7,1,8,2,8,1,8],
+  [5,0,0,0,0,0,0,0],
+  [6,1,8,0,3,3,9,8],
+  [4,2,4,2,4,2,4,2],
+];
+
+let step = 0;
+let rowsShown = 0;
+const btn = document.getElementById('step-btn');
+const listEl = document.getElementById('number-list');
+
+function buildRows() {
+  numbers.forEach((digits, i) => {
+    const row = document.createElement('div');
+    row.className = 'number-row';
+    row.id = 'row-' + i;
+    row.innerHTML =
+      `<div class="row-idx">${i+1}.</div>` +
+      `<span class="zero-dot">0.</span>` +
+      digits.map((d, j) => `<div class="digit" id="d-${i}-${j}">${d}</div>`).join('');
+    listEl.appendChild(row);
+  });
+}
+
+function showRow(i) {
+  setTimeout(() => {
+    const row = document.getElementById('row-' + i);
+    if (row) row.classList.add('visible');
+  }, i * 80);
+}
+
+function highlightDiag(i, cb) {
+  const el = document.getElementById(`d-${i}-${i}`);
+  if (el) el.classList.add('diag');
+  if (i < numbers.length - 1) {
+    setTimeout(() => highlightDiag(i + 1, cb), 260);
+  } else {
+    setTimeout(cb, 400);
+  }
+}
+
+function buildNewDigits() {
+  const el = document.getElementById('new-digits');
+  const diags = numbers.map((row, i) => row[i]);
+  const newD = diags.map(d => d === 5 ? 6 : 5);
+  el.innerHTML = newD.map((d, i) =>
+    `<div class="new-digit" id="nd-${i}" style="opacity:0;transition:opacity 0.3s ease ${i*0.08}s">${d}</div>`
+  ).join('');
+  setTimeout(() => {
+    newD.forEach((_, i) => {
+      const el2 = document.getElementById('nd-' + i);
+      if (el2) el2.style.opacity = '1';
+    });
+  }, 50);
+}
+
+function show(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('visible');
+}
+
+function nextStep() {
+  if (step === 0) {
+    showRow(rowsShown);
+    rowsShown++;
+    if (rowsShown < numbers.length) {
+      btn.textContent = 'add another →';
+    } else {
+      btn.textContent = 'find the diagonal →';
+      step = 1;
+    }
+  } else if (step === 1) {
+    step = 2;
+    btn.disabled = true;
+    show('mn2');
+    highlightDiag(0, () => {
+      show('hint-diag');
+      show('s2');
+      show('mn3');
+      btn.textContent = 'build the new number →';
+      btn.disabled = false;
+      step = 3;
+    });
+  } else if (step === 3) {
+    step = 4;
+    buildNewDigits();
+    show('new-row');
+    setTimeout(() => {
+      show('hint-escape');
+      show('s3');
+      show('mn4');
+      show('big-claim');
+      btn.textContent = '∎';
+      btn.disabled = true;
+    }, 600);
+  }
+}
+
+buildRows();
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section:not(.always)').forEach(el => observer.observe(el));
+
+show('mn0');
+show('mn1');
+show('s1');
+</script>
+</body>
+</html>
